@@ -46,7 +46,8 @@ class HIRS_TPW_ORBITAL(Computation):
         lib_dir = os.path.join(package_root, 'lib')
 
         # Output Name
-        output = 'tpw.orbital.{}.{}.nc'.format(context['sat'], inputs['HIR1B'][12:30])
+        output = 'tpw.orbital.hirs.{}.{}.{}.ssec.nc'.format(context['sat'], inputs['HIR1B'][12:30],
+                                                            context['tpw_version'])
 
         # Create links to static input files
         os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_orig.dat'), 'hirscbnd_orig.dat')
@@ -66,6 +67,26 @@ class HIRS_TPW_ORBITAL(Computation):
         check_call(cmd, shell=True, env=augmented_env({'LD_LIBRARY_PATH': lib_dir}))
 
         return {'out': output}
+
+    def find_contexts(self, sat, hirs_version, collo_version, csrb_version, ctp_version,
+                      tpw_version, time_interval):
+
+        files = delta_catalog.files('hirs', sat, 'HIR1B', time_interval)
+        return [{'granule': file.data_interval.left,
+                 'sat': sat,
+                 'hirs_version': hirs_version,
+                 'collo_version': collo_version,
+                 'csrb_version': csrb_version,
+                 'ctp_version': ctp_version,
+                 'tpw_version': tpw_version}
+                for file in files
+                if file.data_interval.left >= time_interval.left]
+
+    def context_path(self, context, output):
+
+        return os.path.join('HIRS',
+                            '{}/{}'.format(context['sat'], context['granule'].year),
+                            'TPW_ORBITAL')
 
     def generate_cfsr_bin(self, package_root, lib_dir):
 
