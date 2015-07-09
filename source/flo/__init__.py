@@ -110,7 +110,7 @@ class HIRS_TPW_ORBITAL(Computation):
                       'noaa14': 'RC_CRTM21_ODPS_hirs2_n14_shift.nc',
                       'noaa15': 'RC_CRTM21_ODPS_hirs3_n15_shift.nc',
                       'noaa16': 'RC_CRTM21_ODPS_hirs3_n16_shift.nc',
-                      'noaa17': 'RC_CRTM21_ODPS_hirs3_n17_shift.nc',
+                      'noaa-17': 'RC_CRTM21_ODPS_hirs3_n17_shift.nc',
                       'noaa18': 'RC_CRTM21_ODPS_hirs4_n18_shift.nc',
                       'noaa19': 'RC_CRTM21_ODPS_hirs4_n19_shift.nc'}
 
