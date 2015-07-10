@@ -93,6 +93,7 @@ class HIRS_TPW_ORBITAL(Computation):
         os.mkdir('scripts')
         shutil.copy(os.path.join(package_root, 'bin/wgrib2'), './scripts')
 
+        # FIXME: There may be more than one type of these files...
         files = glob('pgbhnl.gdas.*.grb2')
 
         for file in files:
@@ -105,13 +106,13 @@ class HIRS_TPW_ORBITAL(Computation):
     def sat_name_to_coeff(self, sat):
 
         coeff_file = {'metop-a': 'RC_CRTM21_ODPS_hirs4_moa_shift.nc',
-                      'noaa11': 'RC_CRTM21_ODPS_hirs2_n11_shift.nc',
-                      'noaa12': 'RC_CRTM21_ODPS_hirs2_n12_shift.nc',
-                      'noaa14': 'RC_CRTM21_ODPS_hirs2_n14_shift.nc',
-                      'noaa15': 'RC_CRTM21_ODPS_hirs3_n15_shift.nc',
-                      'noaa16': 'RC_CRTM21_ODPS_hirs3_n16_shift.nc',
+                      'noaa-11': 'RC_CRTM21_ODPS_hirs2_n11_shift.nc',
+                      'noaa-12': 'RC_CRTM21_ODPS_hirs2_n12_shift.nc',
+                      'noaa-14': 'RC_CRTM21_ODPS_hirs2_n14_shift.nc',
+                      'noaa-15': 'RC_CRTM21_ODPS_hirs3_n15_shift.nc',
+                      'noaa-16': 'RC_CRTM21_ODPS_hirs3_n16_shift.nc',
                       'noaa-17': 'RC_CRTM21_ODPS_hirs3_n17_shift.nc',
-                      'noaa18': 'RC_CRTM21_ODPS_hirs4_n18_shift.nc',
-                      'noaa19': 'RC_CRTM21_ODPS_hirs4_n19_shift.nc'}
+                      'noaa-18': 'RC_CRTM21_ODPS_hirs4_n18_shift.nc',
+                      'noaa-19': 'RC_CRTM21_ODPS_hirs4_n19_shift.nc'}
 
         return coeff_file[sat]
