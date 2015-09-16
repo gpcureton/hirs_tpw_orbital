@@ -5,6 +5,10 @@ from flo.product import StoredProductCatalog
 from flo.time import TimeInterval
 from flo.sw.hirs_tpw_orbital import HIRS_TPW_ORBITAL
 
+# every module should have a LOG object
+import logging, traceback
+LOG = logging.getLogger(__file__)
+
 
 def symlink(c, output, contexts):
 

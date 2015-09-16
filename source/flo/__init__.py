@@ -10,6 +10,10 @@ from flo.sw.hirs import HIRS
 from flo.sw.hirs_ctp_orbital import HIRS_CTP_ORBITAL
 from flo.sw.hirs.delta import delta_catalog
 
+# every module should have a LOG object
+import logging, traceback
+LOG = logging.getLogger(__file__)
+
 
 class HIRS_TPW_ORBITAL(Computation):
 
@@ -106,6 +110,11 @@ class HIRS_TPW_ORBITAL(Computation):
     def sat_name_to_coeff(self, sat):
 
         coeff_file = {'metop-a': 'RC_CRTM21_ODPS_hirs4_moa_shift.nc',
+                      'metop-b': 'RC_CRTM21_ODPS_hirs4_mob_shift.nc',
+                      'noaa-06': 'RC_CRTM21_ODPS_hirs2_n06_shift.nc',
+                      'noaa-07': 'RC_CRTM21_ODPS_hirs2_n07_shift.nc',
+                      'noaa-09': 'RC_CRTM21_ODPS_hirs2_n09_shift.nc',
+                      'noaa-10': 'RC_CRTM21_ODPS_hirs2_n10_shift.nc',
                       'noaa-11': 'RC_CRTM21_ODPS_hirs2_n11_shift.nc',
                       'noaa-12': 'RC_CRTM21_ODPS_hirs2_n12_shift.nc',
                       'noaa-14': 'RC_CRTM21_ODPS_hirs2_n14_shift.nc',

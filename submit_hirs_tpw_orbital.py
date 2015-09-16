@@ -3,18 +3,43 @@ from flo.time import TimeInterval
 from flo.sw.hirs_ctp_orbital import HIRS_CTP_ORBITAL
 from flo.sw.hirs_tpw_orbital import HIRS_TPW_ORBITAL
 from flo.ui import submit_order
+from flo.ui import local_prepare, local_execute
 import logging
 import sys
 import time
 
+# every module should have a LOG object
+import logging, traceback
+LOG = logging.getLogger(__file__)
 
-def submit(logger, interval, platform):
+def _local_execute_example(platform,interval):
+    '''
+    Run this computation locally
+    '''
 
     hirs_version = 'v20140204'
     collo_version = 'v20140204'
     csrb_version = 'v20140204'
     ctp_version = 'v20140204'
-    tpw_version = 'v20150212'
+    tpw_version = 'v20150915'
+
+    c = HIRS_TPW_ORBITAL()
+    contexts = c.find_contexts(platform, hirs_version, collo_version, csrb_version, ctp_version,
+                               tpw_version, interval)
+    local_prepare(comp, contexts[0])
+    local_execute(comp, contexts[0])
+
+
+def submit(logger, interval, platform):
+    '''
+    Submit this computation to the cluster.
+    '''
+
+    hirs_version = 'v20140204'
+    collo_version = 'v20140204'
+    csrb_version = 'v20140204'
+    ctp_version = 'v20140204'
+    tpw_version = 'v20150915'
 
     c = HIRS_TPW_ORBITAL()
     contexts = c.find_contexts(platform, hirs_version, collo_version, csrb_version, ctp_version,
