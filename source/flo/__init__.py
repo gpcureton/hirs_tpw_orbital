@@ -55,7 +55,7 @@ class HIRS_TPW_ORBITAL(Computation):
 
         # Create links to static input files
         os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_orig.dat'), 'hirscbnd_orig.dat')
-        os.symlink(os.path.join(package_root, 'coeffs/hirscbnd.dat'), 'hirscbnd_shft.dat')
+        os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_shft.dat'), 'hirscbnd_shft.dat')
         shift_file = self.sat_name_to_coeff(context['sat'])
         os.symlink(os.path.join(package_root, 'coeffs/{}'.format(shift_file)), shift_file)
 
