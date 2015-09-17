@@ -54,10 +54,13 @@ class HIRS_TPW_ORBITAL(Computation):
                                                             context['tpw_version'])
 
         # Create links to static input files
-        os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_orig.dat'), 'hirscbnd_orig.dat')
-        os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_shft.dat'), 'hirscbnd_shft.dat')
-        shift_file = self.sat_name_to_coeff(context['sat'])
-        os.symlink(os.path.join(package_root, 'coeffs/{}'.format(shift_file)), shift_file)
+        try:
+            os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_orig.dat'), 'hirscbnd_orig.dat')
+            os.symlink(os.path.join(package_root, 'coeffs/hirscbnd_shft.dat'), 'hirscbnd_shft.dat')
+            shift_file = self.sat_name_to_coeff(context['sat'])
+            os.symlink(os.path.join(package_root, 'coeffs/{}'.format(shift_file)), shift_file)
+        except Exception, err :
+            LOG.error("{}.".format(err))
 
         # Generating CFSR Binaries
         self.generate_cfsr_bin(package_root, lib_dir)
@@ -67,6 +70,7 @@ class HIRS_TPW_ORBITAL(Computation):
         cmd += ' {} {} {}.bin'.format(inputs['HIR1B'], inputs['CTPO'], inputs['CFSR'])
         cmd += ' {} {}.qc {}'.format(output, output, shifted_FM_opt)
 
+        LOG.warn("{}.".format(cmd))
         print cmd
         check_call(cmd, shell=True, env=augmented_env({'LD_LIBRARY_PATH': lib_dir}))
 
