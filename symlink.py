@@ -30,7 +30,7 @@ def symlink(c, output, contexts):
 
 output = 'out'
 sat = 'metop-a'
-hirs_version = 'v20140204'
+hirs_version = 'v20151014'
 collo_version = 'v20140204'
 csrb_version = 'v20140204'
 ctp_version = 'v20140204'
