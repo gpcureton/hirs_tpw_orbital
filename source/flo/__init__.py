@@ -40,7 +40,11 @@ class HIRS_TPW_ORBITAL(Computation):
 
     def run_task(self, inputs, context):
 
-        shifted_FM_opt = 2
+        # No shift for NOAA-8
+        if context['sat']=='noaa-08':
+            shifted_FM_opt = 1
+        else:
+            shifted_FM_opt = 2
 
         # Inputs
         inputs = symlink_inputs_to_working_dir(inputs)
@@ -117,6 +121,7 @@ class HIRS_TPW_ORBITAL(Computation):
                       'metop-b': 'RC_CRTM21_ODPS_hirs4_mob_shift.nc',
                       'noaa-06': 'RC_CRTM21_ODPS_hirs2_n06_shift.nc',
                       'noaa-07': 'RC_CRTM21_ODPS_hirs2_n07_shift.nc',
+                      'noaa-08': 'RC_CRTM21_ODPS_hirs2_n08_noshift.nc',
                       'noaa-09': 'RC_CRTM21_ODPS_hirs2_n09_shift.nc',
                       'noaa-10': 'RC_CRTM21_ODPS_hirs2_n10_shift.nc',
                       'noaa-11': 'RC_CRTM21_ODPS_hirs2_n11_shift.nc',
