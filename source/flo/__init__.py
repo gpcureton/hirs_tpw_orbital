@@ -35,10 +35,16 @@ class HIRS_TPW_ORBITAL(Computation):
 
         # HIRS L1B Input
         hirs_context = context.copy()
-        [hirs_context.pop(k)
-         for k in ['collo_version', 'csrb_version', 'ctp_version', 'tpw_version']]
+        [hirs_context.pop(k) for k in ['collo_version', 'csrb_version', 'ctp_version', 'tpw_version']]
         LOG.debug("hirs_context:  {}".format(hirs_context)) # GPC
-        task.input('HIR1B', HIRS().dataset('out').product(hirs_context))
+        #task.input('HIR1B', HIRS().dataset('out').product(hirs_context))
+        if SPC.exists(HIRS().dataset('out').product(hirs_context)):
+            task.input('HIR1B', HIRS().dataset('out').product(hirs_context))
+        else:
+            LOG.warn("HIRS granule {} is not in the StoredProductCatalog.".
+                    format(hirs_context['granule']))
+            task.inputs = {}
+            return
 
         # CTP Orbital Input
         ctp_context = context.copy()
@@ -53,12 +59,15 @@ class HIRS_TPW_ORBITAL(Computation):
         task.input('CFSR', cfsr_file)
         #task.input('CFSR', delta_catalog.file('ancillary', 'NONE', 'CFSR', cfsr_granule))
 
-        #sys.exit(0) #GPC
+        LOG.debug("Final task.inputs...") # GPC
+        for task_key in task.inputs.keys():
+            LOG.debug("\t{}: {}".format(task_key,task.inputs[task_key])) # GPC
+
+        LOG.debug("Exiting build_task()...") # GPC
 
 
     def run_task(self, inputs, context):
         LOG.debug("Running run_task()") # GPC
-        #sys.exit(0) #GPC
 
         # No shift for NOAA-8
         if context['sat']=='noaa-08':
