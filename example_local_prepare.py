@@ -58,7 +58,7 @@ hirs_version  = 'v20151014'
 collo_version = 'v20151014'
 csrb_version  = 'v20150915'
 ctp_version = 'v20150915'
-tpw_version = 'v20150915'
+tpw_version = 'v20160222'
 granule = datetime(2014, 1, 15, 0, 0)
 
 #local_execute_example(sat, hirs_version, collo_version, csrb_version, ctp_version, tpw_version, granule)
