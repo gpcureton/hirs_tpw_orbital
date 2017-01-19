@@ -7,15 +7,12 @@ from datetime import datetime, timedelta
 from calendar import monthrange
 import logging
 import traceback
-import getpass
-
-from subprocess import CalledProcessError, call
-from subprocess import Popen, STDOUT, PIPE
 
 from flo.time import TimeInterval
 from flo.ui import safe_submit_order
 from flo.product import StoredProductCatalog
 
+from flo.sw.hirs import HIRS
 from flo.sw.hirs_ctp_orbital import HIRS_CTP_ORBITAL
 from flo.sw.hirs_tpw_orbital import HIRS_TPW_ORBITAL
 
@@ -66,7 +63,7 @@ wedge = timedelta(seconds=1.)
 
 # Examine how many of the defined contexts are populated
 intervals = []
-year,month = 2016,4
+year,month = 2016,12
 days = range(1,monthrange(year, month)[1]+1)
 for day in days:
     dt_start = datetime(year, month, day)
@@ -90,11 +87,11 @@ for interval in intervals:
                                tpw_version, interval)
     LOG.info("\tThere are {} contexts in this interval".format(len(contexts)))
     contexts.sort()
-    #for context in contexts:
-        #LOG.debug(context)
+    for context in contexts:
+        LOG.debug(context)
     LOG.info("\tFirst context: {}".format(contexts[0]))
     LOG.info("\tLast context:  {}".format(contexts[-1]))
     LOG.info("\t{}".format(safe_submit_order(comp,
                                              [comp.dataset('out')],
                                              contexts,
-                                             download_onlies=[HIRS_CTP_ORBITAL()])))
+                                             download_onlies=[HIRS(), HIRS_CTP_ORBITAL()])))
