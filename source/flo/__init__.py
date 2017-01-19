@@ -124,23 +124,25 @@ class HIRS_TPW_ORBITAL(Computation):
                 cfsr_file = ingest_catalog.file('CFSR_PGRBHANL',cfsr_granule)
                 num_cfsr_files = len(cfsr_file)
                 if num_cfsr_files != 0:
-                    LOG.debug("\tpgbhnl.gdas.*.grb2 CFSR files from PEATE : {}".format(cfsr_file)) # GPC
+                    LOG.debug("\tpgbhnl.gdas.*.grb2 CFSR_PGRBHANL files from PEATE : {}".format(cfsr_file)) # GPC
             except Exception, err :
                 #LOG.error("{}.".format(err))
                 LOG.debug("\tRetrieval of pgbhnl.gdas.*.grb2 CFSR file from PEATE failed") # GPC
 
         # Search for the new style cdas1.*.t*z.pgrbhanl.grib2 file from PEATE
-        #num_cfsr_files = 0
         if num_cfsr_files == 0:
             LOG.debug("Trying to retrieve cdas1.*.t*z.pgrbhanl.grib2 CFSR file from PEATE...") # GPC
             try:
                 cfsr_file = ingest_catalog.file('CFSV2_PGRBHANL',cfsr_granule)
                 num_cfsr_files = len(cfsr_file)
                 if num_cfsr_files != 0:
-                    LOG.debug("\tcdas1.*.t*z.pgrbhanl.grib2 CFSR file from PEATE : {}".format(cfsr_file)) # GPC
+                    LOG.debug("\tcdas1.*.t*z.pgrbhanl.grib2 CFSV2_PGRBHANL file from PEATE : {}".format(cfsr_file)) # GPC
             except Exception, err :
                 #LOG.error("{}.".format(err))
                 LOG.debug("\tRetrieval of cdas1.*.t*z.pgrbhanl.grib2 CFSR file from PEATE failed") # GPC
+
+        if num_cfsr_files == 0:
+            raise WorkflowNotReady('No CSFR data exists for context {}'.format(cfsr_granule))
 
         # Search for the old style pgbhnl.gdas.*.grb2 file from the file list
         #num_cfsr_files = 0
@@ -154,9 +156,6 @@ class HIRS_TPW_ORBITAL(Computation):
             #except Exception, err :
                 #LOG.error("{}.".format(err))
                 #LOG.warn("\tRetrieval of pgbhnl.gdas.*.grb2 CFSR file from DELTA failed\n") # GPC
-
-
-        #LOG.info("We've found {} CFSR file for context {}".format(len(cfsr_file),cfsr_granule)) # GPC
 
         return cfsr_file
 
