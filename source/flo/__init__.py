@@ -16,7 +16,7 @@ from flo.sw.hirs.delta import delta_catalog
 
 # every module should have a LOG object
 import logging, traceback
-LOG = logging.getLogger(__file__)
+LOG = logging.getLogger(__name__)
 
 ingest_catalog = IngestCatalog('PEATE')
 SPC = StoredProductCatalog()

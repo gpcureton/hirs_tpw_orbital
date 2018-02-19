@@ -17,7 +17,7 @@ from flo.sw.hirs_ctp_orbital import HIRS_CTP_ORBITAL
 from flo.sw.hirs_tpw_orbital import HIRS_TPW_ORBITAL
 
 # every module should have a LOG object
-LOG = logging.getLogger(__file__)
+LOG = logging.getLogger(__name__)
 
 # Set up the logging
 console_logFormat = '%(asctime)s : (%(levelname)s):%(filename)s:%(funcName)s:%(lineno)d:  %(message)s'
